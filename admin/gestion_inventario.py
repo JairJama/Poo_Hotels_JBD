@@ -15,13 +15,13 @@ class GestionInventario:
             if opcion == "1":
                 productoID = Verificaciones.pedir_ID_valido("Ingrese el ID del producto: ")
                 nombre = Verificaciones.pedir_cadena_valida("Ingrese el nombre del item: ")
-                cantidad = Verificaciones.pedir_ID_valido("Ingrese la cantidad a agregar: ")
+                cantidad = int(Verificaciones.pedir_ID_valido("Ingrese la cantidad a agregar: "))  # Convertimos a int
                 categoria = Verificaciones.pedir_cadena_valida("Ingrese la categoría del item: ")
                 proveedor = Verificaciones.pedir_cadena_valida("Ingrese el proveedor del item: ")
                 self.inventario.agregarProducto(productoID, nombre, cantidad, categoria, proveedor)
             elif opcion == "2":
                 nombre = Verificaciones.pedir_cadena_valida("Ingrese el nombre del item a remover: ")
-                cantidad = Verificaciones.pedir_numero_valido("Ingrese la cantidad a remover: ")
+                cantidad = int(Verificaciones.pedir_ID_valido("Ingrese la cantidad a remover: "))  # Convertimos a int
                 self.inventario.eliminarProducto(nombre, cantidad)
             elif opcion == "3":
                 self.inventario.mostrar_inventario()

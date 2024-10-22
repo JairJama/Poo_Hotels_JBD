@@ -34,10 +34,37 @@ class Inventario:
                 producto["cantidadDisponible"] = numero
                 break
 
-    def eliminarProducto(self):
-        print(f"El producto eliminado es {self.productoID}:{self.nombreProducto}")
-        self.listaProductos = [producto for producto in self.listaProductos if producto["productoID"] != self.productoID]
-
+    def eliminarProducto(self, nombre, cantidad):
+        """
+        Elimina o reduce la cantidad de un producto del inventario
+        Args:
+            nombre: nombre del producto a eliminar/reducir
+            cantidad: cantidad a reducir (int)
+        """
+        try:
+            # Aseguramos que cantidad sea un entero
+            cantidad = int(cantidad)
+            
+            for producto in self.listaProductos:
+                if producto["nombreProducto"].lower() == nombre.lower():
+                    if producto["cantidadDisponible"] >= cantidad:
+                        producto["cantidadDisponible"] -= cantidad
+                        print(f"Se han removido {cantidad} unidades de {nombre}")
+                        
+                        # Si la cantidad llega a 0, eliminamos el producto
+                        if producto["cantidadDisponible"] == 0:
+                            self.listaProductos.remove(producto)
+                            print(f"El producto {nombre} ha sido eliminado del inventario")
+                        return True
+                    else:
+                        print(f"Error: Solo hay {producto['cantidadDisponible']} unidades de {nombre} disponibles")
+                        return False
+            
+            print(f"Error: El producto {nombre} no se encuentra en el inventario")
+            return False
+        except ValueError:
+            print("Error: La cantidad debe ser un número entero válido")
+            return False
     def mostrar_inventario(self):
         if not self.listaProductos:
             print("El inventario está vacío.")

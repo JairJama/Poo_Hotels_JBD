@@ -68,7 +68,7 @@ class Empleado(Huespedes):
         self._puesto = puesto
         self._Horario = Horario
         self.lista_empleados = [] 
-
+        self.tareas = {}
     @property
     def IdEmpleado(self):
         return self._IdEmpleado
@@ -125,3 +125,25 @@ class Empleado(Huespedes):
         except Exception as e:
             print(f"\nError al actualizar empleado: {str(e)}")
             return False
+        
+    def asignar_tarea(self, IdEmpleado):
+        """
+        Asigna una tarea a un empleado específico
+        """
+        try:
+            empleado = next((e for e in self.lista_empleados if e.IdEmpleado == IdEmpleado), None)
+            if empleado:
+                tarea = input("Ingrese la tarea a asignar: ")
+                if IdEmpleado not in self.tareas:
+                    self.tareas[IdEmpleado] = []
+                self.tareas[IdEmpleado].append(tarea)
+                print(f"\nTarea asignada exitosamente a {empleado.nombre} {empleado.apellido}")
+                return True
+            else:
+                print("\nEmpleado no encontrado")
+                return False
+        except Exception as e:
+            print(f"\nError al asignar tarea: {str(e)}")
+            return False
+
+    

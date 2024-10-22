@@ -51,10 +51,11 @@ class Facturacion:
 
     def cancelar_reserva(self, apellido_cliente, nombre_cliente, numero_habitacion):
         self.activa = False
+        # Usamos los parámetros recibidos para mantener la consistencia con la firma del método
         return f"La reserva para {apellido_cliente}, {nombre_cliente} en la habitación {numero_habitacion} ha sido cancelada."
 
     def modificar_reserva(self, nombre_cliente, apellido_cliente, numero_habitacion, 
-                        fecha_entrada, fecha_salida):
+                    fecha_entrada, fecha_salida):
         print("¿Qué desea modificar?")
         print("1. Nombre del cliente")
         print("2. Apellido del cliente")
@@ -66,22 +67,28 @@ class Facturacion:
         op_mod = int(input("Escoja una opción: "))
         
         if op_mod == 1:
-            nombre_cliente = input("Ingrese el nuevo nombre: ")
+            self.nombre_cliente = input("Ingrese el nuevo nombre: ")
+            nombre_cliente = self.nombre_cliente
         elif op_mod == 2:
-            apellido_cliente = input("Ingrese el nuevo apellido: ")
+            self.apellido_cliente = input("Ingrese el nuevo apellido: ")
+            apellido_cliente = self.apellido_cliente
         elif op_mod == 3:
-            numero_habitacion = int(input("Ingrese el nuevo número de habitación: "))
+            self.numero_habitacion = int(input("Ingrese el nuevo número de habitación: "))
+            numero_habitacion = self.numero_habitacion
         elif op_mod == 4:
             nueva_fecha = input("Ingrese la nueva fecha de entrada (DD/MM/YYYY): ")
-            fecha_entrada = datetime.strptime(nueva_fecha, "%d/%m/%Y")
+            self.fecha_entrada = datetime.strptime(nueva_fecha, "%d/%m/%Y")
+            fecha_entrada = self.fecha_entrada
         elif op_mod == 5:
             nueva_fecha = input("Ingrese la nueva fecha de salida (DD/MM/YYYY): ")
-            fecha_salida = datetime.strptime(nueva_fecha, "%d/%m/%Y")
+            self.fecha_salida = datetime.strptime(nueva_fecha, "%d/%m/%Y")
+            fecha_salida = self.fecha_salida
         elif op_mod == 6:
             return "Volviendo al menu principal..."
         else:
             return "Opcion invalida."
         
+        # Actualizar los atributos con los valores posiblemente modificados
         self.nombre_cliente = nombre_cliente
         self.apellido_cliente = apellido_cliente
         self.numero_habitacion = numero_habitacion

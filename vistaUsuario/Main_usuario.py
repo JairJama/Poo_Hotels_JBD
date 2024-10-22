@@ -33,9 +33,11 @@ class Main:
 
         print("--------------------------------------------------------")
         reserva = Facturacion(nombre, apellido, habitacion, fecha_entrada, fecha_salida, tarifa_diaria=20)
-        total = reserva.calcular_total()
+        # Aquí está el cambio - pasamos los argumentos necesarios
+        total = reserva.calcular_total(fecha_entrada, fecha_salida, reserva.tarifa_diaria)
         print(f"Total calculado: ${total:.2f}")
-        print(reserva.generar_factura())
+        # También debemos pasar los argumentos para generar_factura
+        print(reserva.generar_factura(nombre, apellido, habitacion, fecha_entrada, fecha_salida, reserva.tarifa_diaria))
         self.reservas.append(reserva)
 
     def modificar_reserva(self):
@@ -43,7 +45,14 @@ class Main:
         reserva_encontrada = False
         for reserva in self.reservas:
             if reserva.numero_habitacion == numHabitacion and reserva.activa:
-                resultado = reserva.modificar_reserva()
+                # Pasamos todos los parámetros requeridos
+                resultado = reserva.modificar_reserva(
+                    reserva.nombre_cliente,
+                    reserva.apellido_cliente,
+                    reserva.numero_habitacion,
+                    reserva.fecha_entrada,
+                    reserva.fecha_salida
+                )
                 print(resultado)
                 reserva_encontrada = True
                 break
@@ -55,7 +64,12 @@ class Main:
         reserva_encontrada = False
         for reserva in self.reservas:
             if reserva.numero_habitacion == numHabitacion and reserva.activa:
-                resultado = reserva.cancelar_reserva()
+                # Pasamos los parámetros requeridos
+                resultado = reserva.cancelar_reserva(
+                    reserva.apellido_cliente,
+                    reserva.nombre_cliente,
+                    reserva.numero_habitacion
+                )
                 print(resultado)
                 reserva_encontrada = True
                 break
@@ -67,7 +81,15 @@ class Main:
             for i, reserva in enumerate(self.reservas, 1):
                 if reserva.activa:
                     print(f"\nReserva {i}:")
-                    print(reserva.mostrar_detalle_reserva())
+                    print(reserva.mostrar_detalle_reserva(
+                        reserva.nombre_cliente,
+                        reserva.apellido_cliente,
+                        reserva.numero_habitacion,
+                        reserva.fecha_entrada,
+                        reserva.fecha_salida,
+                        reserva.tarifa_diaria,
+                        reserva.activa
+                    ))
         else:
             print("No hay reservas registradas.")
 
